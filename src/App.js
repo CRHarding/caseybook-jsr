@@ -9,22 +9,12 @@ import './App.css';
 import axios from 'axios';
 
 // Custom Components
-import Person from './Person';
-import People from './People';
+import Profile from './Profile';
+import Friends from './Friends';
 
 class App extends Component {
-  // We initialize our App component with a
-  // constructor
   constructor(props) {
-    // This allows us to 'hook' into Component's
-    // constructor to bring in additional
-    // Component functionality.
     super(props);
-    // The main thing that Component gives us
-    // access to is 'state', or data local
-    // to our component
-    // I now have access to this.state.people
-    // anywhere in my App.js component
     this.state = {
       apiDataLoaded: false,
       apiError: false,
@@ -92,14 +82,14 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1>Friends</h1>
-        <ul>
-          <People header="Not Friends" people={nonFriends} />
-          <People header="Friends" people={friends} />
-          { this.state.apiError && <p>Sorry, try again</p> }
-          { this.state.apiDataLoaded === false && <p>Loading user data!</p> }
-          { this.state.apiDataLoaded && <p>{this.state.newPerson.email}</p> }
-        </ul>
+        <Profile />
+        <Friends
+          nonFriends={nonFriends}
+          friends={friends}
+          apiError={this.state.apiError}
+          apiDataLoaded={this.state.apiDataLoaded}
+          newPerson={this.state.newPerson}
+        />
       </div>
     );
   }
