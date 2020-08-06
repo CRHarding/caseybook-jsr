@@ -12,18 +12,21 @@ import axios from 'axios';
 import Profile from './Profile';
 import Friends from './Friends';
 
+// React Router
+import { Route, Link } from 'react-router-dom';
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       apiDataLoaded: false,
       apiError: false,
-      people: [
+      user:
         {
           name: 'Casey',
-          occupation: 'Instructor',
-          friend: 0
+          occupation: 'Instructor'
         },
+      people: [
         {
           name: 'Jason',
           occupation: 'Professional Wrestler',
@@ -82,14 +85,22 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Profile />
-        <Friends
-          nonFriends={nonFriends}
-          friends={friends}
-          apiError={this.state.apiError}
-          apiDataLoaded={this.state.apiDataLoaded}
-          newPerson={this.state.newPerson}
-        />
+        <nav>
+          <Link to="/profile">Profile</Link>
+          <Link to="/friends">Friends</Link>
+        </nav>
+        <Route path="/profile" render={() => {
+          return <Profile user={this.state.user} />
+        }} />
+        <Route path="/friends" render={() => {
+          return <Friends
+                    nonFriends={nonFriends}
+                    friends={friends}
+                    apiError={this.state.apiError}
+                    apiDataLoaded={this.state.apiDataLoaded}
+                    newPerson={this.state.newPerson}
+                  />
+        }} />
       </div>
     );
   }
